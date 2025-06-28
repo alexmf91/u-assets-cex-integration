@@ -1,0 +1,58 @@
+# Ignore build outputs
+dist/
+build/
+
+# Ignore dependencies
+node_modules/
+
+# Ignore logs
+logs
+*.log
+pnpm-debug.log*
+
+# Ignore environment files
+.env*
+!.env.example
+*.local
+
+# Ignore TypeScript build output
+*.tsbuildinfo
+*.d.ts
+
+# Ignore cache and temporary files
+.vite/
+.cache/
+.nx/
+.out/
+.tmp/
+
+# Ignore NestJS specific files
+nestjs-cli.json
+ormconfig.json
+ormconfig.ts
+swagger.json
+
+# Ignore editor-specific files
+*.swp
+*.swo
+.DS_Store
+.idea/
+.vscode/
+
+# Ignore test coverage reports
+coverage/
+
+# Ignore package lock files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Ignore CLI generated artifacts
+.openapi/
+.swagger/
+
+# Ignore release files
+CHANGELOG.md
+
+# Ignore VSCode Console Ninja cache
+.console-ninja/
