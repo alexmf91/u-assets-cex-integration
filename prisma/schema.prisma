@@ -1,0 +1,94 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+}
+
+model User {
+    id           String   @id @default(uuid())
+    username     String   @unique
+    passwordHash String
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    // Relations
+    quotes Quote[]
+    orders Order[]
+
+    @@map("users")
+}
+
+model Asset {
+    id        String   @id @default(uuid())
+    symbol    String   @unique // e.g., "uETH", "uBTC"
+    name      String // e.g., "Universal Wrapped Ethereum"
+    decimals  Int      @default(18)
+    isActive  Boolean  @default(true)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    quotes Quote[]
+    orders Order[]
+
+    @@map("assets")
+}
+
+model Quote {
+    id         String    @id @default(uuid())
+    assetId    String
+    userId     String
+    amount     Decimal   @db.Decimal(20, 8)
+    price      Decimal   @db.Decimal(20, 8)
+    side       QuoteSide
+    createdAt  DateTime  @default(now())
+    commitedAt DateTime  @default(now())
+
+    // Relations
+    asset  Asset   @relation(fields: [assetId], references: [id])
+    user   User    @relation(fields: [userId], references: [id])
+    orders Order[]
+
+    @@map("quotes")
+}
+
+model Order {
+    id        String      @id @default(uuid())
+    quoteId   String
+    assetId   String
+    userId    String
+    amount    Decimal     @db.Decimal(20, 8)
+    price     Decimal     @db.Decimal(20, 8)
+    side      OrderSide
+    status    OrderStatus @default(PENDING)
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+
+    // Relations
+    quote Quote @relation(fields: [quoteId], references: [id])
+    asset Asset  @relation(fields: [assetId], references: [id])
+    user  User   @relation(fields: [userId], references: [id])
+
+    @@map("orders")
+}
+
+enum QuoteSide {
+    BUY
+    SELL
+}
+
+enum OrderSide {
+    BUY
+    SELL
+}
+
+enum OrderStatus {
+    PENDING
+    FILLED
+    CANCELLED
+    FAILED
+}
