@@ -29,7 +29,8 @@ async function bootstrap() {
 
 		setupSwagger(app, configService)
 
-		await app.listen(PORT)
+		// Bind to 0.0.0.0 to accept external connections (required for Render)
+		await app.listen(PORT, '0.0.0.0')
 		const url = await app.getUrl()
 
 		Logger.verbose(`Application is running on: ${url} ✔️`)
@@ -37,6 +38,7 @@ async function bootstrap() {
 	} catch (error) {
 		const errorMessage = error instanceof Error ? error.message : String(error)
 		Logger.error(`❌❌❌ ${errorMessage} ❌❌❌`)
+		process.exit(1)
 	}
 }
 
