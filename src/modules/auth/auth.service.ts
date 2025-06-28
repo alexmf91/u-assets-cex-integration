@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 
 import { DatabaseService } from '../database'
 import { UserNotFoundException } from '../users/users.exceptions'
@@ -17,11 +17,11 @@ export class AuthService {
 		private readonly databaseService: DatabaseService
 	) {}
 
-	private async comparePassword(password: string, hash: string): Promise<boolean> {
+	private comparePassword(password: string, hash: string): Promise<boolean> {
 		return bcrypt.compare(password, hash)
 	}
 
-	public async hashPassword(password: string): Promise<string> {
+	public hashPassword(password: string): Promise<string> {
 		return bcrypt.hash(password, this.saltRounds)
 	}
 
