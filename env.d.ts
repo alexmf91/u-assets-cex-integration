@@ -8,8 +8,7 @@ export interface EnvironmentVariables {
   JWT_EXPIRATION: number;
   REDIS_URL: string;
   DATABASE_URL: string;
-  DIRECT_URL: boolean;
-  ALCHEMY_API_KEY: string;
+  DIRECT_URL: string;
 }
 
 declare namespace NodeJS {
