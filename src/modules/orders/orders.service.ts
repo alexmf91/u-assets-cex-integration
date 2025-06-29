@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { handleServiceError } from 'src/common/utils'
+import { handleServiceError } from '../../common/utils'
 import { AssetsService } from '../assets/assets.service'
 import { DatabaseService } from '../database'
 import { QuotesService } from '../quotes'
