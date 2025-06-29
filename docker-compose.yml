@@ -22,7 +22,9 @@ services:
             - redis_data:/data
 
     app:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile.local
         depends_on:
             - db
             - redis
@@ -32,6 +34,10 @@ services:
             DIRECT_URL: postgres://postgres:postgres@db:5432/uasset_cex
             REDIS_URL: redis://redis:6379
             NODE_ENV: development
+            JWT_SECRET: your-super-secret-jwt-key-here
+            JWT_EXPIRATION: 3600
+            VERSION: 1
+            APP: u-assets-cex-integration
         ports:
             - '8080:8080'
         volumes:
